@@ -13,17 +13,17 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Caetano Flores, Juniors, DCCO-ESPE
+ * @author Anabel Davila,Andres Espin, DCCO-ESPE
  */
 public class JsonManager {
-    public void createJson(ArrayList<University> universities) {
+    public void createJson(ArrayList<Farm> animals) {
         File file = new File("SavedFiles");
         file.mkdir();
         Gson gson = new Gson();
         
-        String json = gson.toJson(universities);
+        String json = gson.toJson(animals);
 
-        try (FileWriter fileWriter = new FileWriter("SavedFiles/universities.json")) {
+        try (FileWriter fileWriter = new FileWriter("SavedFiles/animalsFarm.json")) {
             fileWriter.write(json);
         } catch (IOException e) {
             e.printStackTrace();

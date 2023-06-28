@@ -5,35 +5,35 @@
 package ec.edu.espe.view;
 
 import ec.edu.espe.model.JsonManager;
-import ec.edu.espe.model.University;
-import ec.edu.espe.controller.UniversityManager;
+import ec.edu.espe.model.Farm;
+import ec.edu.espe.controller.FarmController;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  *
- * @author Caetano Flores, Juniors, DCCO-ESPE
+ * @author Anabel Davila,Andres Espin, DCCO-ESPE
  */
 public class Menu {
     Scanner scanner = new Scanner(System.in);
-    University university;
-    ArrayList<University> universities = new ArrayList<>();
-    UniversityManager universityManager = new UniversityManager();
+    Farm animal;
+    ArrayList<Farm> animals = new ArrayList<>();
+    FarmController FarmController = new FarmController();
 
     public void menu() {
         int option;
         do{
-            System.out.println("1.Enter university");
-            System.out.println("2.Delete all universities");
+            System.out.println("1.Enter animal Farm Id");
+            System.out.println("2.Delete all animal");
             System.out.println("3.Close");
             option = scanner.nextInt();
 
                 switch(option) {
                     case 1:
-                        universityManager.registrateUniversity(universities);
+                        FarmController.registrateAnimalFarm(animals);
                     break;
                     case 2:
-                        universityManager.deleteUniversityList(universities);
+                        FarmController.deleteAnimalList(animals);
                     break;
                     case 3: 
                         System.out.println("Leaving....");

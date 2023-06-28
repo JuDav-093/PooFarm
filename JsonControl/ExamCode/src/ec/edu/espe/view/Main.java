@@ -1,13 +1,13 @@
 package ec.edu.espe.view;
 
 import ec.edu.espe.model.JsonManager;
-import ec.edu.espe.model.University;
+import ec.edu.espe.model.Farm;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  *
- * @author Caetano Flores, Juniors, DCCO-ESPE
+ * @author Anabel Davila,Andres Espin, DCCO-ESPE
  */
 public class Main {
     
