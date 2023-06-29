@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": 1,
+    "specie": "perro",
+    "color": "negro",
+    "weight": "23423"
+  },
+  {
+    "id": 2,
+    "specie": "asdas",
+    "color": "grr",
+    "weight": "dawq"
+  }
+]

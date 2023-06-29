@@ -1,43 +1,92 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ec.edu.espe.controller;
 
-import ec.edu.espe.model.JsonManager;
+
 import ec.edu.espe.model.Farm;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- *
- * @author Anabel Davila,Andres Espin, DCCO-ESPE
- */
 public class FarmController {
     Farm farm;
     Scanner scanner = new Scanner(System.in);
-    JsonManager jsonManager = new JsonManager();
-    
+    DataBaseController dbController = new DataBaseController();
+
     public void registrateAnimalFarm(ArrayList<Farm> animals) {
         int id;
-        String color, weight;
+        String color, weight, specie;
         System.out.println("Enter animal farm Id: ");
         id = scanner.nextInt();
+        System.out.println("Enter the specie: ");
+        specie = scanner.next();
         System.out.println("Enter animal color: ");
         color = scanner.next();
         System.out.println("Enter animal weight: ");
         weight = scanner.next();
-        
-        farm = new Farm(id, color, weight);
+
+        farm = new Farm(id, specie, color, weight);
         animals.add(farm);
-        jsonManager.createJson(animals);
-        System.out.println("Animal registrated correctly");
+
+        ArrayList<Farm> animalsFromJson = dbController.readAnimalsFromJson();
+        animalsFromJson.add(farm);
+        dbController.saveAnimalsToMongoDB(animalsFromJson);
+
+        System.out.println("Animal registered correctly");
     }
-    
-    public void deleteAnimalList(ArrayList<Farm> animals) {
-        animals.clear();
-        System.out.println("All Animal deleted correctly");
-        jsonManager.createJson(animals);
+
+    public void printAnimal(ArrayList<Farm> animals) {
+        ArrayList<Farm> animalsFromJson = dbController.readAnimalsFromJson();
+
+        if (animalsFromJson.isEmpty()) {
+            System.out.println("No animals registered.");
+        } else {
+            System.out.println("Registered Animals:");
+            for (Farm animal : animalsFromJson) {
+                System.out.println("Animal Farm ID: " + animal.getId());
+                System.out.println("Specie: " + animal.getSpecie());
+                System.out.println("Color: " + animal.getColor());
+                System.out.println("Weight: " + animal.getWeight());
+                System.out.println("--------------------------");
+            }
+        }
     }
-    
+
+    public void deleteAnimalList() {
+        dbController.deleteAllAnimalsFromMongoDB();
+        System.out.println("All Animals deleted correctly");
+    }
+
+    public void editObject() {
+        System.out.println("Enter the ID of the animal to edit: ");
+        int id = scanner.nextInt();
+        boolean found = false;
+
+        ArrayList<Farm> animalsFromJson = dbController.readAnimalsFromJson();
+
+        for (Farm animal : animalsFromJson) {
+            if (animal.getId() == id) {
+                found = true;
+
+                System.out.println("Enter the new specie: ");
+                String newSpecie = scanner.next();
+                animal.setSpecie(newSpecie);
+
+                System.out.println("Enter the new color: ");
+                String newColor = scanner.next();
+                animal.setColor(newColor);
+
+                System.out.println("Enter the new weight: ");
+                String newWeight = scanner.next();
+                animal.setWeight(newWeight);
+
+                System.out.println("Animal with ID " + id + " has been updated.");
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Animal with ID " + id + " was not found.");
+        }
+
+        dbController.saveAnimalsToMongoDB(animalsFromJson);
+    }
 }
+
